@@ -6,7 +6,7 @@
   "homepage": "http://platformio.org/platforms/nordicnrf52",
   "license": "Apache-2.0",
   "engines": {
-    "platformio": "git@github.com:dnanudgeltd/arduino-nRF5.git"
+    "platformio": "^3.0.0"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
     "framework-arduinonordicnrf5": {
       "type": "framework",
       "optional": true,
-      "version": "~0.3.0"
+      "version": "git@github.com:dnanudgeltd/arduino-nRF5.git"
     },
     "tool-sreccat": {
       "version": "~1.164.0"
