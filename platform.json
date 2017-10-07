@@ -40,7 +40,7 @@
     "framework-arduinonordicnrf5": {
       "type": "framework",
       "optional": true,
-      "version": "git@github.com:dnanudgeltd/arduino-nRF5.git"
+      "version": "https://github.com/dnanudgeltd/arduino-nRF5"
     },
     "tool-sreccat": {
       "version": "~1.164.0"
