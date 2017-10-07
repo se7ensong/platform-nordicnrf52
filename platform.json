@@ -6,7 +6,7 @@
   "homepage": "http://platformio.org/platforms/nordicnrf52",
   "license": "Apache-2.0",
   "engines": {
-    "platformio": "https://github.com/dnanudge/arduino-nRF5"
+    "platformio": "git@github.com:dnanudgeltd/arduino-nRF5.git"
   },
   "repository": {
     "type": "git",
