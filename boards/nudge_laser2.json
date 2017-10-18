@@ -6,7 +6,7 @@
     "f_cpu": "64000000L",
     "mcu": "nrf52832",
     "ldscript": "nrf52_xxaa.ld",
-    "variant": "NudgeLaser_2"
+    "variant": "NudgeLaser2"
   },
   "connectivity": [
     "bluetooth"
