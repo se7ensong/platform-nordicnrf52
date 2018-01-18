@@ -2,14 +2,15 @@
   "build": {
     "core": "nRF5",
     "cpu": "cortex-m4",
-    "extra_flags": "-DARDUINO_NRF52_DK",
+    "extra_flags": "-DARDUINO_GENERIC",
     "f_cpu": "64000000L",
     "mcu": "nrf52832",
     "ldscript": "nrf52_xxaa.ld",
-    "variant": "nRF52DK"
+    "variant": "Generic"
   },
   "connectivity": [
-    "bluetooth"
+    "bluetooth",
+    "nfc"
   ],
   "debug": {
     "tools": {
@@ -31,12 +32,12 @@
     "arduino",
     "mbed"
   ],
-  "name": "Nordic nRF52-DK",
+  "name": "u-blox EVK-NINA-B1",
   "upload": {
     "maximum_ram_size": 65536,
     "maximum_size": 524288,
     "protocol": "jlink"
   },
-  "url": "https://developer.mbed.org/platforms/Nordic-nRF52-DK/",
-  "vendor": "Nordic"
+  "url": "https://os.mbed.com/platforms/u-blox-EVK-NINA-B1/",
+  "vendor": "u-blox"
 }
