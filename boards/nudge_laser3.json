@@ -12,21 +12,10 @@
     "bluetooth"
   ],
   "debug": {
-    "tools": {
-      "jlink": {
-        "server": {
-          "test": "hello",
-          "package": "tool-openocd",
-          "executable": "bin/openocd",
-          "arguments": [
-            "-f", "scripts/interface/jlink.cfg",
-            "-c", "transport select swd",
-            "-f", "scripts/target/nrf52.cfg"
-          ]
-        },
-        "onboard": true
-      }
-    }
+    "jlink_device": "nRF52832_xxAA",
+    "default_tools": [
+      "jlink"
+    ]
   },
   "frameworks": [
     "arduino",
@@ -36,8 +25,12 @@
   "upload": {
     "maximum_ram_size": 65536,
     "maximum_size": 524288,
-    "protocol": "jlink"
+    "protocol": "jlink",
+    "protocols": [
+      "jlink",
+      "nrfjprog"
+    ]
   },
-  "url": "https://developer.mbed.org/platforms/Nordic-nRF52-DK/",
-  "vendor": "Nordic"
+  "url": "http://www.dnanudge.com/en/DnaBand",
+  "vendor": "DNAnudge"
 }
