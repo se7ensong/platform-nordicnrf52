@@ -19,12 +19,8 @@
   ],
   "frameworks": {
     "arduino": {
-      "package": "framework-arduinonordicnrf5",
+      "package": "framework-arduinoadafruitnrf52",
       "script": "builder/frameworks/arduino/arduino.py"
-    },
-    "mbed": {
-      "package": "framework-mbed",
-      "script": "builder/frameworks/mbed/mbed.py"
     }
   },
   "packages": {
@@ -32,15 +28,10 @@
       "type": "toolchain",
       "version": ">=1.60301.0"
     },
-    "framework-mbed": {
+    "framework-arduinoadafruitnrf52": {
       "type": "framework",
       "optional": true,
-      "version": "~4.50707.0"
-    },
-    "framework-arduinonordicnrf5": {
-      "type": "framework",
-      "optional": true,
-      "version": "https://github.com/dnanudgeltd/arduino-nRF5"
+      "version": "https://github.com/dnanudgeltd/Adafruit_nRF52_Arduino.git"
     },
     "tool-sreccat": {
       "version": "~1.164.0"
@@ -54,6 +45,11 @@
       "type": "uploader",
       "optional": true,
       "version": "~1.90702.0"
+    },
+    "tool-nrfutil": {
+      "type": "uploader",
+      "optional": true,
+      "version": "https://github.com/NordicSemiconductor/pc-nrfutil.git"
     }
   }
 }

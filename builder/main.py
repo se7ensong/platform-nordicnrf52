@@ -118,6 +118,24 @@ env.Append(
                 "--line-length=44"
             ]), "Building $TARGET"),
             suffix=".hex"
+        ),
+        PackageDfu=Builder(
+            action=env.VerboseAction(" ".join([
+# IMPROVE: install and use nrfutil from tool-nrfutil 
+#                join(platform.get_package_dir("tool-nrfutil") or "",
+#                     "nrfutil"),
+                "nrfutil",
+                "dfu",
+                "genpkg",
+                "--dev-type",
+                "0x0052",
+                "--sd-req",
+                "0x00A5",
+                "--application",
+                "$SOURCES",
+                "$TARGET"
+            ]), "Building $TARGET"),
+            suffix=".zip"
         )
     )
 )
@@ -135,6 +153,10 @@ else:
         target_firm = env.MergeHex(
             join("$BUILD_DIR", "${PROGNAME}"),
             env.ElfToHex(join("$BUILD_DIR", "userfirmware"), target_elf))
+    elif "DFUBOOTHEX" in env:
+        target_firm = env.PackageDfu(
+            join("$BUILD_DIR", "${PROGNAME}"),
+            env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf))
     else:
         target_firm = env.ElfToHex(
             join("$BUILD_DIR", "${PROGNAME}"), target_elf)
@@ -196,6 +218,22 @@ elif upload_protocol == "nrfjprog":
         UPLOADCMD="$UPLOADER $UPLOADERFLAGS --program $SOURCE"
     )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
+
+elif upload_protocol == "nrfutil":
+    env.Replace(
+        UPLOADER="nrfutil",
+        UPLOADERFLAGS=[
+            "dfu",
+            "serial",
+            "-p",
+            "$UPLOAD_PORT",
+            "-b",
+            "$UPLOAD_SPEED"
+        ],
+        UPLOADCMD="$UPLOADER $UPLOADERFLAGS -pkg $SOURCE"
+    )
+    upload_actions = [env.VerboseAction(env.AutodetectUploadPort, "Looking for upload port..."),
+                      env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 
 elif upload_protocol.startswith("jlink"):
 
