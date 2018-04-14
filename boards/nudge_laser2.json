@@ -5,7 +5,7 @@
     "extra_flags": "-DARDUINO_NUDGE_LASER",
     "f_cpu": "64000000L",
     "mcu": "nrf52832",
-    "ldscript": "nrf52_xxaa.ld",
+    "ldscript": "bluefruit52_s132_5.1.0.ld",
     "variant": "NudgeLaser2"
   },
   "connectivity": [
@@ -25,10 +25,11 @@
   "upload": {
     "maximum_ram_size": 65536,
     "maximum_size": 524288,
-    "protocol": "jlink",
+    "require_upload_port": true,
+    "speed": 115200,
+    "protocol": "nrfutil",
     "protocols": [
-      "jlink",
-      "nrfjprog"
+      "nrfutil"
     ]
   },
   "url": "http://www.dnanudge.com/en/DnaBand",
