@@ -140,8 +140,8 @@ env.Append(
         SignBin=Builder(
             action=env.VerboseAction(" ".join([
                 "python",
-                join(platform.get_package_dir("framework-arduinoadafruitnrf52") or "",
-                     "tools", "pynrfbintool", "pynrfbintool.py"),
+                '"'+join(platform.get_package_dir("framework-arduinoadafruitnrf52") or "",
+                     "tools", "pynrfbintool", "pynrfbintool.py")+'"',
                 "--signature",
                 "$TARGET",
                 "$SOURCES"
@@ -279,7 +279,7 @@ elif upload_protocol.startswith("jlink"):
             "-if", ("jtag" if upload_protocol == "jlink-jtag" else "swd"),
             "-autoconnect", "1"
         ],
-        UPLOADCMD="$UPLOADER $UPLOADERFLAGS -CommanderScript ${__jlink_cmd_script(__env__, SOURCE)}"
+        UPLOADCMD="$UPLOADER $UPLOADERFLAGS -CommanderScript "+'"'+"${__jlink_cmd_script(__env__, SOURCE)}"+'"'
     )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 
