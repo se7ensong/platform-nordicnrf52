@@ -6,7 +6,7 @@
     "f_cpu": "64000000L",
     "mcu": "nrf52832",
     "ldscript": "nrf52832_s132_v6.ld",
-    "variant": "nudge_laser4"
+    "variant": "dnaband_v4_1"
   },
   "connectivity": [
     "bluetooth"
