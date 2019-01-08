@@ -261,7 +261,7 @@ elif upload_protocol.startswith("jlink"):
 
         commands = [
             "h", 
-            "loadbin %s,0x23000" % str(source).replace("_signature", ""), 
+            "loadbin %s,0x26000" % str(source).replace("_signature", ""), 
             "loadbin %s,0x7F000" % source, 
             "r", 
             "q"
