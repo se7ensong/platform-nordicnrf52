@@ -130,7 +130,7 @@ env.Append(
                 "--dev-type",
                 "0x0052",
                 "--sd-req",
-                "0x00AF",
+                "0x00B7",
                 "--application",
                 "$SOURCES",
                 "$TARGET"
