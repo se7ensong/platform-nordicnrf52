@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import sys
+import time
 from platform import system
 from os import makedirs
 from os.path import isdir, join
@@ -135,7 +136,7 @@ env.Append(
                 "$SOURCES",
                 "$TARGET"
             ]), "Building $TARGET"),
-            suffix=".zip"
+            suffix=time.strftime("_%Y-%m-%d-%H_%M_%S",time.localtime(time.time()))+".zip"
         ),
         SignBin=Builder(
             action=env.VerboseAction(" ".join([
