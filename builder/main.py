@@ -16,7 +16,7 @@ import sys
 import time
 from platform import system
 from os import makedirs
-from os.path import isdir, join
+from os.path import isdir, join, isfile
 
 from SCons.Script import (COMMAND_LINE_TARGETS, AlwaysBuild, Builder, Default,
                           DefaultEnvironment)
@@ -64,6 +64,12 @@ env.Replace(
 
     PROGSUFFIX=".elf"
 )
+
+if isfile('lib\mpl\liblibmplmpu.a') and env.get("LIBS") and env.GetCompilerType() == "gcc":
+    env.Prepend(_LIBFLAGS="lib\mpl\liblibmplmpu.a ")
+else:
+    sys.stderr.write("eMPL for MPU6050 are not used\n")
+
 
 # Allow user to override via pre:script
 if env.get("PROGNAME", "program") == "program":
