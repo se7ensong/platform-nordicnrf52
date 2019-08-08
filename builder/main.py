@@ -144,6 +144,24 @@ env.Append(
             ]), "Building $TARGET"),
             suffix=time.strftime("_%Y-%m-%d-%H_%M_%S",time.localtime(time.time()))+".zip"
         ),
+        PackageDfuApp=Builder(
+            action=env.VerboseAction(" ".join([
+# IMPROVE: install and use nrfutil from tool-nrfutil 
+#                join(platform.get_package_dir("tool-nrfutil") or "",
+#                     "nrfutil"),
+                "nrfutil",
+                "dfu",
+                "genpkg",
+                "--dev-type",
+                "0x0052",
+                "--sd-req",
+                "0x00A5",
+                "--application",
+                "$SOURCES",
+                "$TARGET"
+            ]), "Building $TARGET"),
+            suffix=".zip"
+        ),
         SignBin=Builder(
             action=env.VerboseAction(" ".join([
                 "python",
@@ -173,6 +191,9 @@ else:
     dfu_package = env.PackageDfu(
         join("$BUILD_DIR", "${PROGNAME}"),
         env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf))
+    dfu_package_app = env.PackageDfuApp(
+        join("$BUILD_DIR", "${PROGNAME}"),
+        env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf))    
     if "SOFTDEVICEHEX" in env:
         target_firm = env.MergeHex(
             join("$BUILD_DIR", "${PROGNAME}"),
@@ -186,6 +207,7 @@ else:
 
 AlwaysBuild(env.Alias("nobuild", target_firm))
 AlwaysBuild(env.Alias("dfu", dfu_package))
+AlwaysBuild(env.Alias("dfu_app", dfu_package_app))
 target_buildprog = env.Alias("buildprog", target_firm, target_firm)
 
 #
