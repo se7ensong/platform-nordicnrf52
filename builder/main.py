@@ -13,9 +13,10 @@
 # limitations under the License.
 
 import sys
+import time
 from platform import system
 from os import makedirs
-from os.path import isdir, join
+from os.path import isdir, join, isfile
 
 from SCons.Script import (COMMAND_LINE_TARGETS, AlwaysBuild, Builder, Default,
                           DefaultEnvironment)
@@ -63,6 +64,12 @@ env.Replace(
 
     PROGSUFFIX=".elf"
 )
+
+if isfile('lib\mpl\liblibmplmpu.a') and env.get("LIBS") and env.GetCompilerType() == "gcc":
+    env.Prepend(_LIBFLAGS="lib\mpl\liblibmplmpu.a ")
+else:
+    sys.stderr.write("eMPL for MPU6050 are not used\n")
+
 
 # Allow user to override via pre:script
 if env.get("PROGNAME", "program") == "program":
@@ -135,6 +142,24 @@ env.Append(
                 "$SOURCES",
                 "$TARGET"
             ]), "Building $TARGET"),
+            suffix=time.strftime("_%Y-%m-%d-%H_%M_%S",time.localtime(time.time()))+".zip"
+        ),
+        PackageDfuApp=Builder(
+            action=env.VerboseAction(" ".join([
+# IMPROVE: install and use nrfutil from tool-nrfutil 
+#                join(platform.get_package_dir("tool-nrfutil") or "",
+#                     "nrfutil"),
+                "nrfutil",
+                "dfu",
+                "genpkg",
+                "--dev-type",
+                "0x0052",
+                "--sd-req",
+                "0x00B7",
+                "--application",
+                "$SOURCES",
+                "$TARGET"
+            ]), "Building $TARGET"),
             suffix=".zip"
         ),
         SignBin=Builder(
@@ -166,6 +191,9 @@ else:
     dfu_package = env.PackageDfu(
         join("$BUILD_DIR", "${PROGNAME}"),
         env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf))
+    dfu_package_app = env.PackageDfuApp(
+        join("$BUILD_DIR", "${PROGNAME}"),
+        env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf))    
     if "SOFTDEVICEHEX" in env:
         target_firm = env.MergeHex(
             join("$BUILD_DIR", "${PROGNAME}"),
@@ -179,6 +207,7 @@ else:
 
 AlwaysBuild(env.Alias("nobuild", target_firm))
 AlwaysBuild(env.Alias("dfu", dfu_package))
+AlwaysBuild(env.Alias("dfu_app", dfu_package_app))
 target_buildprog = env.Alias("buildprog", target_firm, target_firm)
 
 #
